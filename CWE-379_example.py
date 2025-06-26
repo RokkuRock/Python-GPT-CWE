@@ -2,10 +2,10 @@
 import tempfile
 
 def create_temp():
-    # CWE-379: tempfile.mktemp 產生可預測路徑，CodeQL 可報警
-    path = tempfile.mktemp(prefix="data_")
+    # CWE-379: 使用 mktemp 會產生可預測路徑
+    path = tempfile.mktemp(prefix="session_")
     with open(path, "w") as f:
-        f.write("temporary")
+        f.write("session data")
     print("Wrote to", path)
 
 if __name__ == "__main__":
