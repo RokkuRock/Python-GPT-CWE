@@ -1,11 +1,12 @@
 # xxe.py
-import xml.dom.minidom
+from xml.etree import ElementTree
 
-def parse_user_xml():
-    fname = input("XML filename: ")
-    # CWE-611: 預設啟用外部實體解析
-    doc = xml.dom.minidom.parse(fname)
-    print("Root element:", doc.documentElement.tagName)
+def parse_xml():
+    fname = input("XML file: ")
+    # CWE-611: ET.parse 預設啟用外部實體
+    tree = ElementTree.parse(fname)
+    root = tree.getroot()
+    print("Root tag:", root.tag)
 
 if __name__ == "__main__":
-    parse_user_xml()
+    parse_xml()
