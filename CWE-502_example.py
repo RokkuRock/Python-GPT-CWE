@@ -1,12 +1,12 @@
-# file: insecure_deserialize.py
+# insecure_deserialize.py
 import pickle
 
-def load_data():
-    fname = input("Pickle filename: ")
+def load_object():
+    path = input("Pickle file path: ")
     # CWE-502: 未驗證來源直接反序列化
-    with open(fname, 'rb') as f:
-        data = pickle.load(f)
-    print("Loaded object:", data)
+    with open(path, 'rb') as f:
+        obj = pickle.load(f)
+    print("Loaded:", type(obj))
 
 if __name__ == "__main__":
-    load_data()
+    load_object()
