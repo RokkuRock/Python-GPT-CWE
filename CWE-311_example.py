@@ -1,4 +1,3 @@
-# insecure_request.py
 import requests
 
 def fetch():
