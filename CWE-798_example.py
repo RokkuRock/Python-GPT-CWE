@@ -1,14 +1,14 @@
-# hardcoded_credentials.py
+# hardcoded_creds.py
 def login():
-    # CWE-798: 程式內直接寫死帳號與密碼
+    # CWE-798: 程式內硬編 user/pass
     USER = "admin"
-    PASS = "S3cr3t!"
-    user = input("User: ")
-    passwd = input("Pass: ")
-    if user == USER and passwd == PASS:
-        print("Welcome admin")
+    PASS = "P@ssw0rd"
+    u = input("User: ")
+    p = input("Pass: ")
+    if u == USER and p == PASS:
+        print("Welcome")
     else:
-        print("Authentication failed")
+        print("Denied")
 
 if __name__ == "__main__":
     login()
