@@ -1,11 +1,13 @@
-# template_injection.py
-from jinja2 import Template
+# ssti.py
+from flask import Flask, request, render_template_string
 
-def render():
-    tpl = input("Enter template (e.g. {{ 7*7 }}): ")
-    # CWE-94: 直接用使用者輸入建立 Template
-    rendered = Template(tpl).render()
-    print("Output:", rendered)
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    tpl = request.args.get("tpl", "")
+    # CWE-94: 未淨化直接渲染使用者提供的 template
+    return render_template_string(tpl)
 
 if __name__ == "__main__":
-    render()
+    app.run(port=5003)
