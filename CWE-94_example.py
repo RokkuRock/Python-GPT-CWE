@@ -6,7 +6,6 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     tpl = request.args.get("tpl", "")
-    # CWE-94: 未淨化直接渲染使用者提供的 template
     return render_template_string(tpl)
 
 if __name__ == "__main__":
