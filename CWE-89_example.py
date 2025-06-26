@@ -3,18 +3,15 @@ import sqlite3
 
 def login():
     conn = sqlite3.connect(':memory:')
-    conn.execute("CREATE TABLE users(u,p)")
+    conn.execute("CREATE TABLE users(u, p)")
     conn.execute("INSERT INTO users VALUES('admin','secret')")
-    u = input("Username: ")
-    p = input("Password: ")
-    q = f"SELECT * FROM users WHERE u='{u}' AND p='{p}'"  # CWE-89
-    print("SQL:", q)
+    u = input("User: ")
+    p = input("Pass: ")
+    # CWE-89: 直接拼接輸入
+    q = f"SELECT * FROM users WHERE u = '{u}' AND p = '{p}'"
+    print("Query:", q)
     cur = conn.execute(q)
-    if cur.fetchone():
-        print("Login successful")
-    else:
-        print("Login failed")
-    conn.close()
+    print("Login successful" if cur.fetchone() else "Login failed")
 
 if __name__ == "__main__":
     login()
