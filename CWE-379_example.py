@@ -1,4 +1,3 @@
-# temp_file.py
 import tempfile
 
 def create():
