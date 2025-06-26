@@ -1,16 +1,15 @@
-# pickle_deserialize.py
-import pickle, socket
+# pickle_server.py
+import socket, pickle
 
-def load_remote():
-    # 從簡易 TCP 服務讀取序列化資料
+def run_server():
     s = socket.socket()
-    s.bind(('localhost', 9000))
+    s.bind(('localhost', 9002))
     s.listen(1)
     conn, _ = s.accept()
     data = conn.recv(4096)
     # CWE-502: 直接 pickle.loads 未驗證來源
     obj = pickle.loads(data)
-    print("Received:", obj)
+    print("Loaded:", obj)
 
 if __name__ == "__main__":
-    load_remote()
+    run_server()
