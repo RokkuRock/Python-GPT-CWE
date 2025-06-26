@@ -1,14 +1,11 @@
 # template_injection.py
-from flask import Flask, request, render_template_string
+from jinja2 import Template
 
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    # CWE-94: render_template_string 直接以 user 提交的 template，CodeQL 會抓到
-    tpl = request.args.get("tpl", "")
-    return render_template_string(tpl)
+def render():
+    tpl = input("Enter template (e.g. {{ 7*7 }}): ")
+    # CWE-94: 直接用使用者輸入建立 Template
+    rendered = Template(tpl).render()
+    print("Output:", rendered)
 
 if __name__ == "__main__":
-    # 僅監聽本機，無外部依賴
-    app.run(port=5000)
+    render()
