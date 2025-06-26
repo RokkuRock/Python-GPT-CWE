@@ -1,16 +1,16 @@
 # sql_injection.py
 import sqlite3
 
-def add_and_search():
+def find_customer():
     conn = sqlite3.connect(":memory:")
-    conn.execute("CREATE TABLE items(id INTEGER, name TEXT)")
-    conn.executemany("INSERT INTO items VALUES(?,?)", [(1,"apple"),(2,"banana")])
-    name = input("Search item name: ")
-    # CWE-89: 直接拼接使用者輸入到查詢字串
-    q = f"SELECT id FROM items WHERE name = '{name}'"
-    print("Running:", q)
-    for row in conn.execute(q):
-        print("Found ID:", row[0])
+    conn.execute("CREATE TABLE customers(id, name)")
+    conn.executemany("INSERT INTO customers VALUES(?,?)", [(1,"Alice"),(2,"Bob")])
+    term = input("Search name: ")
+    # CWE-89: 直接拼接 user input
+    query = f"SELECT id FROM customers WHERE name = '{term}'"
+    print("Running:", query)
+    for r in conn.execute(query):
+        print("Found ID:", r[0])
 
 if __name__ == "__main__":
-    add_and_search()
+    find_customer()
