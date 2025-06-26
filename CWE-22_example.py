@@ -1,4 +1,3 @@
-# path_traversal_server.py
 from flask import Flask, request, send_file, abort
 import os
 
