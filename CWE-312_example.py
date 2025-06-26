@@ -1,4 +1,3 @@
-# cleartext_store.py
 def store_api_key():
     key = input("Enter API key: ")
     with open("config.txt", "w") as f:
