@@ -1,12 +1,12 @@
-# path_traversal.py
+# view_report.py
 import os
 
-def read_report():
-    name = input("Report name (in reports/): ")
-    # CWE-22: 未過濾 ../，可跳脫到任意路徑
-    path = os.path.join("reports", name)
-    with open(path, "r") as f:
+def show_report():
+    fname = input("Report filename (in reports/): ")
+    # CWE-22: 未過濾 '../' → python/path-traversal
+    path = os.path.join("reports", fname)
+    with open(path, 'r') as f:
         print(f.read())
 
 if __name__ == "__main__":
-    read_report()
+    show_report()
