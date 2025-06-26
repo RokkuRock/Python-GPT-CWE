@@ -1,10 +1,10 @@
 # cmd_injection.py
 import subprocess
 
-def list_dir():
-    folder = input("Folder to list: ")
-    # CWE-78: shell=True 且未清洗輸入，會被 CodeQL 偵測
-    subprocess.Popen(f"ls {folder}", shell=True)
+def remove_old_logs():
+    days = input("Delete logs older than how many days? ")
+    # CWE-78: shell=True 且未清洗使用者輸入 → python/command-injection
+    subprocess.run(f"find /var/log -mtime +{days} -delete", shell=True)
 
 if __name__ == "__main__":
-    list_dir()
+    remove_old_logs()
