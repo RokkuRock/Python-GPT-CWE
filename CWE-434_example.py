@@ -1,4 +1,3 @@
-# file_upload.py
 from flask import Flask, request
 import os
 
