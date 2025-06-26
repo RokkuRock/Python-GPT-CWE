@@ -2,7 +2,6 @@
 import tempfile
 
 def create():
-    # CWE-379: tempfile.mktemp 會產生可預測路徑
     path = tempfile.mktemp(prefix="sess_")
     with open(path, "w") as f:
         f.write("session")
