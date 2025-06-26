@@ -1,12 +1,11 @@
-# xxe.py
+# xxe_parser.py
 from xml.etree import ElementTree
 
-def parse_xml():
+def parse():
     fname = input("XML file: ")
-    # CWE-611: ET.parse 預設啟用外部實體
+    # CWE-611: ET.parse 預設允許外部實體
     tree = ElementTree.parse(fname)
-    root = tree.getroot()
-    print("Root tag:", root.tag)
+    print("Root:", tree.getroot().tag)
 
 if __name__ == "__main__":
-    parse_xml()
+    parse()
