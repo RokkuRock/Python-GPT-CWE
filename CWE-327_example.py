@@ -1,11 +1,11 @@
 # weak_crypto.py
 import hashlib
 
-def sign_data():
-    data = input("Data to sign: ")
-    # CWE-327: 使用 MD5 而非安全雜湊 → python/weak-crypto
-    sig = hashlib.md5(data.encode()).hexdigest()
-    print("MD5 signature:", sig)
+def sign():
+    msg = input("Data: ")
+    # CWE-327: MD5 雜湊已知不安全
+    sig = hashlib.md5(msg.encode()).hexdigest()
+    print("MD5:", sig)
 
 if __name__ == "__main__":
-    sign_data()
+    sign()
