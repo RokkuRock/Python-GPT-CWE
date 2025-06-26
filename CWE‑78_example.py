@@ -1,9 +1,10 @@
 # file: cmd_injection.py
-import os
+import subprocess
 
 def list_dir():
     path = input("Directory to list: ")
-    os.system(f"ls {path}")  # CWE-78: 任意 shell 指令注入
+    # CWE-78: shell=True + 未清洗輸入
+    subprocess.call(f"ls {path}", shell=True)
 
 if __name__ == "__main__":
     list_dir()
