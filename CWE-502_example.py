@@ -1,12 +1,12 @@
-# yaml_load.py
-import yaml
+# pickle_loader.py
+import pickle
 
-def load_config():
-    path = input("YAML file path: ")
-    # CWE-502: yaml.load 而非 safe_load，CodeQL 會報警
-    with open(path) as f:
-        cfg = yaml.load(f, Loader=yaml.FullLoader)
-    print("Config keys:", list(cfg.keys()))
+def load_job():
+    path = input("Pickle file path: ")
+    # CWE-502: 直接 pickle.load → python/insecure-deserialization
+    with open(path, 'rb') as f:
+        job = pickle.load(f)
+    print("Job loaded:", job)
 
 if __name__ == "__main__":
-    load_config()
+    load_job()
