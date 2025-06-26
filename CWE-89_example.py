@@ -1,15 +1,16 @@
-# sql_injection.py
+# sql_search.py
 import sqlite3
 
-def find_user():
-    term = input("Search username substring: ")
-    conn = sqlite3.connect(":memory:")
-    conn.execute("CREATE TABLE users(name)")
-    conn.executemany("INSERT INTO users VALUES(?)", [("alice",),("bob",)])
-    # CWE-89: 直接使用 f-string 串接，CodeQL 可偵測
-    q = f"SELECT name FROM users WHERE name LIKE '%{term}%'"
-    for row in conn.execute(q):
+def search():
+    term = input("Search product name contains: ")
+    con = sqlite3.connect(":memory:")
+    con.execute("CREATE TABLE products(name)")
+    con.executemany("INSERT INTO products VALUES(?)", [("apple",),("banana",),("apricot",)])
+    # CWE-89: f-string 直接拼接 user input → python/sql-injection
+    q = f"SELECT name FROM products WHERE name LIKE '%{term}%'"
+    print("Query:", q)
+    for row in con.execute(q):
         print("Found:", row[0])
 
 if __name__ == "__main__":
-    find_user()
+    search()
