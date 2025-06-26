@@ -1,16 +1,18 @@
-# sql_search.py
+# sql_injection.py
 import sqlite3
 
-def search():
-    term = input("Search product name contains: ")
-    con = sqlite3.connect(":memory:")
-    con.execute("CREATE TABLE products(name)")
-    con.executemany("INSERT INTO products VALUES(?)", [("apple",),("banana",),("apricot",)])
-    # CWE-89: f-string 直接拼接 user input → python/sql-injection
-    q = f"SELECT name FROM products WHERE name LIKE '%{term}%'"
-    print("Query:", q)
-    for row in con.execute(q):
-        print("Found:", row[0])
+def vulnerable_search():
+    name = input("Search user by name: ")
+    conn = sqlite3.connect(":memory:")
+    conn.execute("CREATE TABLE users(name, email)")
+    conn.executemany("INSERT INTO users VALUES(?,?)", [
+        ("alice","a@example.com"), ("bob","b@example.com")
+    ])
+    # CWE-89: 直接將使用者輸入串接到 SQL 字串
+    query = f"SELECT email FROM users WHERE name = '{name}'"
+    print("Executing:", query)
+    for row in conn.execute(query):
+        print(row[0])
 
 if __name__ == "__main__":
-    search()
+    vulnerable_search()
