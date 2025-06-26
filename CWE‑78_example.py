@@ -1,10 +1,11 @@
 # cmd_injection.py
 import subprocess
 
-def remove_old_logs():
-    days = input("Delete logs older than how many days? ")
-    # CWE-78: shell=True 且未清洗使用者輸入 → python/command-injection
-    subprocess.run(f"find /var/log -mtime +{days} -delete", shell=True)
+def list_directory():
+    # 從使用者讀入目錄名稱
+    folder = input("Folder to list: ")
+    # CWE-78: 使用 shell=True 且直接拼接使用者輸入
+    subprocess.run(f"ls {folder}", shell=True)
 
 if __name__ == "__main__":
-    remove_old_logs()
+    list_directory()
