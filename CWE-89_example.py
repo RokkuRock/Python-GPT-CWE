@@ -1,17 +1,20 @@
 # sql_injection.py
 import sqlite3
 
-def login():
-    conn = sqlite3.connect(':memory:')
-    conn.execute("CREATE TABLE users(name, pwd)")
-    conn.execute("INSERT INTO users VALUES('admin','secret')")
+def vulnerable_login():
+    conn = sqlite3.connect(":memory:")
+    conn.execute("CREATE TABLE admin(u, p)")
+    conn.execute("INSERT INTO admin VALUES('root','toor')")
     user = input("Username: ")
     pwd  = input("Password: ")
-    # CWE-89: 直接拼接字串查詢
-    query = f"SELECT * FROM users WHERE name = '{user}' AND pwd = '{pwd}'"
-    print("Query:", query)
+    # CWE-89: 直接拼接使用者輸入到 SQL 字串
+    query = f"SELECT * FROM admin WHERE u='{user}' AND p='{pwd}'"
+    print("Executing:", query)
     cur = conn.execute(query)
-    print("Login successful" if cur.fetchone() else "Login failed")
+    if cur.fetchone():
+        print("Access granted")
+    else:
+        print("Access denied")
 
 if __name__ == "__main__":
-    login()
+    vulnerable_login()
