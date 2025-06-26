@@ -1,7 +1,8 @@
-# file: code_injection.py
+# file: code_eval.py
 def calc():
-    expr = input("Enter Python expr: ")
-    result = eval(expr)  # CWE-94
+    expr = input("Enter expression: ")
+    # CWE-94: 任意 eval
+    result = eval(expr)
     print("Result:", result)
 
 if __name__ == "__main__":
