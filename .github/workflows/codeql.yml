@@ -1,0 +1,54 @@
+name: "CodeQL Python Analysis"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  schedule:
+    - cron: '0 3 * * 1'  # 每週一自動掃描
+
+jobs:
+  codeql:
+    name: CodeQL Scan Python
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+      packages: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+          queries: security-and-quality,security-experimental
+
+      - name: Install dependencies (if any)
+        shell: bash
+        run: |
+          if [ -f "requirements.txt" ]; then
+            pip install -r requirements.txt || echo "⚠️ Dependency installation failed or not needed"
+          fi
+
+      - name: Python syntax check
+        shell: bash
+        run: |
+          python -m compileall . || echo "⚠️ Python syntax warnings"
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "python-vulnerability-scan"
+          upload: always
