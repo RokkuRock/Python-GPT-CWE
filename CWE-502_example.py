@@ -1,12 +1,12 @@
-# insecure_deserialize.py
-import pickle
+# yaml_deserialize.py
+import yaml
 
-def load_object():
-    path = input("Pickle file path: ")
-    # CWE-502: 未驗證來源直接反序列化
-    with open(path, 'rb') as f:
-        obj = pickle.load(f)
-    print("Loaded:", type(obj))
+def load_config():
+    fname = input("YAML config file path: ")
+    # CWE-502: 使用 yaml.load 而非 safe_load
+    with open(fname) as f:
+        cfg = yaml.load(f, Loader=yaml.FullLoader)
+    print("Config:", cfg)
 
 if __name__ == "__main__":
-    load_object()
+    load_config()
