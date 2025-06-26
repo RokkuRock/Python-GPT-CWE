@@ -1,10 +1,10 @@
-# file: cleartext_storage.py
-def store_secret():
-    secret = input("Enter secret token: ")
-    # CWE-312: 明文寫入
-    with open('token.txt', 'w') as f:
-        f.write(secret)
-    print("Secret stored in token.txt")
+# cleartext_store.py
+def store_api_key():
+    key = input("Enter API key: ")
+    # CWE-312: 明文寫入磁碟
+    with open("config.txt", "w") as f:
+        f.write(f"api_key={key}\n")
+    print("Key saved to config.txt")
 
 if __name__ == "__main__":
-    store_secret()
+    store_api_key()
